@@ -1,0 +1,381 @@
+Generated 2026-11-23 09:11:53Z by `python tests/run.py --evidence`.
+Python 3.10.12 on Linux-6.8.0-149-generic-x86_64-with-glibc2.35.
+
+p2p-lending — test run
+================================================================
+unit: money                    47 checks    47 passed     0 failed
+    ok    [R6          ] an int passes through unchanged
+    ok    [R6          ] zero is a valid amount
+    ok    [R6          ] a negative amount is valid (ledger entries have direction)
+    ok    [R6          ] a float is refused, not rounded
+    ok    [R6          ] a float with a fraction is refused
+    ok    [R6          ] a Decimal is refused
+    ok    [R6          ] a numeric string is refused
+    ok    [R6          ] None is refused
+    ok    [R6          ] True is refused despite being an int subclass
+    ok    [R6          ] False is refused for the same reason
+    ok    [R6          ] exactly half rounds up
+    ok    [R6          ] just under half rounds down
+    ok    [R6          ] just over half rounds up
+    ok    [R6          ] 1.5 rounds to 2
+    ok    [R6          ] 2.5 rounds to 3, not to 2 (not banker's rounding)
+    ok    [R6          ] 3.5 rounds to 4
+    ok    [R6          ] an exact division is untouched
+    ok    [R6          ] minus a half rounds away from zero
+    ok    [R6          ] minus 2.5 rounds to minus 3
+    ok    [R6          ] minus just under half rounds toward zero
+    ok    [R6          ] a zero denominator is refused
+    ok    [R6          ] a negative denominator is refused
+    ok    [I6          ] an even split is even
+    ok    [I6          ] the residue lands on the last part
+    ok    [I6          ] a residue of two also lands last
+    ok    [I6          ] one part takes everything
+    ok    [I6          ] allocate(100, 3) sums exactly to the total
+    ok    [I6          ] allocate(100, 3) returns the requested number of parts
+    ok    [I6          ] allocate(1000000, 7) sums exactly to the total
+    ok    [I6          ] allocate(1000000, 7) returns the requested number of parts
+    ok    [I6          ] allocate(12345679, 18) sums exactly to the total
+    ok    [I6          ] allocate(12345679, 18) returns the requested number of parts
+    ok    [I6          ] allocate(5000000, 24) sums exactly to the total
+    ok    [I6          ] allocate(5000000, 24) returns the requested number of parts
+    ok    [I6          ] zero parts is refused
+    ok    [I6          ] a negative number of parts is refused
+    ok    [I6          ] a full year at 12% on ten million is 1,200,000
+    ok    [I6          ] zero days accrues nothing
+    ok    [I6          ] a zero rate accrues nothing
+    ok    [I6          ] a zero balance accrues nothing
+    ok    [I6          ] a negative rate is refused
+    ok    [I6          ] a negative number of days is refused
+    ok    [I6          ] a float balance is refused
+    ok    [A4.2        ] thousands are grouped with a dot
+    ok    [A4.2        ] a short amount is unchanged
+    ok    [A4.2        ] zero formats as zero
+    ok    [A4.2        ] a negative amount keeps its sign
+unit: schedule                 68 checks    68 passed     0 failed
+    ok    [A4.3        ] one month on from 15 Jan is 15 Feb
+    ok    [A4.3        ] 31 Jan plus one month clamps to 28 Feb, not 3 Mar
+    ok    [A4.3        ] 31 Jan 2028 plus one month clamps to 29 Feb in a leap year
+    ok    [A4.3        ] twelve months on crosses the year
+    ok    [A4.3        ] two months from December lands in February
+    ok    [A1.3        ] a 3-month term is accepted
+    ok    [A1.3        ] a 6-month term is accepted
+    ok    [A1.3        ] a 12-month term is accepted
+    ok    [A1.3        ] a 18-month term is accepted
+    ok    [A1.3        ] a 24-month term is accepted
+    ok    [A1.3        ] a 7-month term is refused
+    ok    [A1.3        ] a zero term is refused
+    ok    [A1.3        ] a free-text term is refused
+    ok    [A4.1        ] a float principal is refused
+    ok    [A4.1        ] a zero principal is refused
+    ok    [A4.1        ] a negative rate is refused
+    ok    [A4.1        ] a string date is refused
+    ok    [I6 A4.4     ] 5000000 VND / 1500 bps / 3m: principal columns sum to the principal
+    ok    [I6 A4.4     ] 5000000 VND / 1500 bps / 3m: instalment totals sum to total repayable
+    ok    [I6 A4.4     ] 5000000 VND / 1500 bps / 3m: total repayable is principal plus total interest
+    ok    [A4.3        ] 5000000 VND / 1500 bps / 3m: every instalment has a non-negative interest figure
+    ok    [A4.3        ] 5000000 VND / 1500 bps / 3m: due dates are strictly increasing
+    ok    [A4.3        ] 5000000 VND / 1500 bps / 3m: sequence numbers run 1..n without a gap
+    ok    [I6 A4.4     ] 7000000 VND / 1800 bps / 6m: principal columns sum to the principal
+    ok    [I6 A4.4     ] 7000000 VND / 1800 bps / 6m: instalment totals sum to total repayable
+    ok    [I6 A4.4     ] 7000000 VND / 1800 bps / 6m: total repayable is principal plus total interest
+    ok    [A4.3        ] 7000000 VND / 1800 bps / 6m: every instalment has a non-negative interest figure
+    ok    [A4.3        ] 7000000 VND / 1800 bps / 6m: due dates are strictly increasing
+    ok    [A4.3        ] 7000000 VND / 1800 bps / 6m: sequence numbers run 1..n without a gap
+    ok    [I6 A4.4     ] 10000000 VND / 1200 bps / 12m: principal columns sum to the principal
+    ok    [I6 A4.4     ] 10000000 VND / 1200 bps / 12m: instalment totals sum to total repayable
+    ok    [I6 A4.4     ] 10000000 VND / 1200 bps / 12m: total repayable is principal plus total interest
+    ok    [A4.3        ] 10000000 VND / 1200 bps / 12m: every instalment has a non-negative interest figure
+    ok    [A4.3        ] 10000000 VND / 1200 bps / 12m: due dates are strictly increasing
+    ok    [A4.3        ] 10000000 VND / 1200 bps / 12m: sequence numbers run 1..n without a gap
+    ok    [I6 A4.4     ] 12345679 VND / 2400 bps / 18m: principal columns sum to the principal
+    ok    [I6 A4.4     ] 12345679 VND / 2400 bps / 18m: instalment totals sum to total repayable
+    ok    [I6 A4.4     ] 12345679 VND / 2400 bps / 18m: total repayable is principal plus total interest
+    ok    [A4.3        ] 12345679 VND / 2400 bps / 18m: every instalment has a non-negative interest figure
+    ok    [A4.3        ] 12345679 VND / 2400 bps / 18m: due dates are strictly increasing
+    ok    [A4.3        ] 12345679 VND / 2400 bps / 18m: sequence numbers run 1..n without a gap
+    ok    [I6 A4.4     ] 99999997 VND / 2050 bps / 24m: principal columns sum to the principal
+    ok    [I6 A4.4     ] 99999997 VND / 2050 bps / 24m: instalment totals sum to total repayable
+    ok    [I6 A4.4     ] 99999997 VND / 2050 bps / 24m: total repayable is principal plus total interest
+    ok    [A4.3        ] 99999997 VND / 2050 bps / 24m: every instalment has a non-negative interest figure
+    ok    [A4.3        ] 99999997 VND / 2050 bps / 24m: due dates are strictly increasing
+    ok    [A4.3        ] 99999997 VND / 2050 bps / 24m: sequence numbers run 1..n without a gap
+    ok    [I6 A4.4     ] 100000000 VND / 1000 bps / 24m: principal columns sum to the principal
+    ok    [I6 A4.4     ] 100000000 VND / 1000 bps / 24m: instalment totals sum to total repayable
+    ok    [I6 A4.4     ] 100000000 VND / 1000 bps / 24m: total repayable is principal plus total interest
+    ok    [A4.3        ] 100000000 VND / 1000 bps / 24m: every instalment has a non-negative interest figure
+    ok    [A4.3        ] 100000000 VND / 1000 bps / 24m: due dates are strictly increasing
+    ok    [A4.3        ] 100000000 VND / 1000 bps / 24m: sequence numbers run 1..n without a gap
+    ok    [I6 A4.4     ] 5000001 VND / 3300 bps / 3m: principal columns sum to the principal
+    ok    [I6 A4.4     ] 5000001 VND / 3300 bps / 3m: instalment totals sum to total repayable
+    ok    [I6 A4.4     ] 5000001 VND / 3300 bps / 3m: total repayable is principal plus total interest
+    ok    [A4.3        ] 5000001 VND / 3300 bps / 3m: every instalment has a non-negative interest figure
+    ok    [A4.3        ] 5000001 VND / 3300 bps / 3m: due dates are strictly increasing
+    ok    [A4.3        ] 5000001 VND / 3300 bps / 3m: sequence numbers run 1..n without a gap
+    ok    [A4.4        ] a principal not divisible by the term leaves a residue
+    ok    [A4.4        ] the final instalment carries the extra dong
+    ok    [A4.4        ] nominal instalment times the term overstates the total
+    ok    [A4.2        ] the final period's interest is far below the first's
+    ok    [A4.2        ] interest rises exactly once, after the short February period
+    ok    [A4.2        ] the rise is from the February period to the March one
+    ok    [A4.3        ] the same inputs produce an identical schedule
+    ok    [I6          ] an interest-free loan repays exactly the principal
+    ok    [I6          ] an interest-free loan accrues no interest
+unit: payment                  70 checks    70 passed     0 failed
+    ok    [C1.1        ] the application order is fees, late interest, interest, principal
+    ok    [C1.1        ] a full payment produces one row per bucket
+    ok    [C1.1        ] fees are satisfied first
+    ok    [C1.1        ] late interest is satisfied second
+    ok    [C1.1        ] interest is satisfied third
+    ok    [C1.1        ] principal is satisfied last
+    ok    [I4          ] a full payment sums to the amount received
+    ok    [C1.1        ] a payment under the fee produces exactly one row
+    ok    [C1.1        ] that row is the fee
+    ok    [I4          ] it sums to the amount received
+    ok    [C1.1        ] no principal is touched
+    ok    [C1.1        ] no interest is touched
+    ok    [C1.1        ] the fee is fully satisfied
+    ok    [C1.1        ] late interest is fully satisfied
+    ok    [C1.1        ] interest takes only what is left
+    ok    [C1.1        ] principal is untouched
+    ok    [I4          ] a partial payment sums to the amount received
+    ok    [C1.3        ] principal absorbs up to the whole outstanding balance
+    ok    [C1.3        ] what remains after the debt is recorded as unapplied
+    ok    [I4          ] an overpayment still sums to the amount received
+    ok    [I4          ] an overpayment loses nothing — no row is silently dropped
+    ok    [I4          ] with nothing owed the whole payment is unapplied
+    ok    [I4          ] and it still sums to the amount received
+    ok    [I4          ] 1 dong: the rows sum to the amount received
+    ok    [I4          ] 1 dong: every row is a positive amount
+    ok    [C1.1        ] 1 dong: rows are numbered 1..n in order
+    ok    [I4          ] 7 dong: the rows sum to the amount received
+    ok    [I4          ] 7 dong: every row is a positive amount
+    ok    [C1.1        ] 7 dong: rows are numbered 1..n in order
+    ok    [I4          ] 49999 dong: the rows sum to the amount received
+    ok    [I4          ] 49999 dong: every row is a positive amount
+    ok    [C1.1        ] 49999 dong: rows are numbered 1..n in order
+    ok    [I4          ] 50000 dong: the rows sum to the amount received
+    ok    [I4          ] 50000 dong: every row is a positive amount
+    ok    [C1.1        ] 50000 dong: rows are numbered 1..n in order
+    ok    [I4          ] 50001 dong: the rows sum to the amount received
+    ok    [I4          ] 50001 dong: every row is a positive amount
+    ok    [C1.1        ] 50001 dong: rows are numbered 1..n in order
+    ok    [I4          ] 279999 dong: the rows sum to the amount received
+    ok    [I4          ] 279999 dong: every row is a positive amount
+    ok    [C1.1        ] 279999 dong: rows are numbered 1..n in order
+    ok    [I4          ] 280000 dong: the rows sum to the amount received
+    ok    [I4          ] 280000 dong: every row is a positive amount
+    ok    [C1.1        ] 280000 dong: rows are numbered 1..n in order
+    ok    [I4          ] 280001 dong: the rows sum to the amount received
+    ok    [I4          ] 280001 dong: every row is a positive amount
+    ok    [C1.1        ] 280001 dong: rows are numbered 1..n in order
+    ok    [I4          ] 1279999 dong: the rows sum to the amount received
+    ok    [I4          ] 1279999 dong: every row is a positive amount
+    ok    [C1.1        ] 1279999 dong: rows are numbered 1..n in order
+    ok    [I4          ] 1280001 dong: the rows sum to the amount received
+    ok    [I4          ] 1280001 dong: every row is a positive amount
+    ok    [C1.1        ] 1280001 dong: rows are numbered 1..n in order
+    ok    [I4          ] 9999999 dong: the rows sum to the amount received
+    ok    [I4          ] 9999999 dong: every row is a positive amount
+    ok    [C1.1        ] 9999999 dong: rows are numbered 1..n in order
+    ok    [I4          ] a zero payment is refused
+    ok    [I4          ] a negative payment is refused
+    ok    [I4          ] a float payment is refused
+    ok    [I4          ] an unknown bucket is refused
+    ok    [I4          ] a negative amount owed is refused
+    ok    [I4          ] a float amount owed is refused
+    ok    [C1.4        ] a settlement quote is principal plus interest to date
+    ok    [C1.4        ] the quote is strictly less than one with a day of future interest
+    ok    [C1.4        ] fees and late interest are included when present
+    ok    [C1.4        ] a settled loan quotes zero
+    ok    [C1.4        ] a negative principal is refused
+    ok    [C1.4        ] a float in a quote is refused
+    ok    [C1.4        ] paying the quote leaves nothing unapplied
+    ok    [C1.4        ] paying the quote clears the principal
+unit: distribution             22 checks    22 passed     0 failed
+    ok    [I5 C2.2     ] three equal lenders, 100 dong: the parts sum to 100
+    ok    [C2.2        ] the residue goes to the earliest commitment on a tie
+    ok    [C2.2        ] the later lenders take the floor
+    ok    [I5          ] three equal lenders, 101 dong: the parts sum to 101
+    ok    [C2.2        ] the two earliest each take a dong
+    ok    [C2.2        ] the latest takes the floor
+    ok    [C2.1        ] a 70% share receives 700,000
+    ok    [C2.1        ] a 20% share receives 200,000
+    ok    [C2.1        ] a 10% share receives 100,000
+    ok    [I5          ] an exact split sums to the amount
+    ok    [I5          ] a sole lender receives the whole amount
+    ok    [C2.2        ] allocations come back in the order the shares were given
+    ok    [C2.2        ] the same inputs distribute identically
+    ok    [I5          ] a simultaneous tie still sums exactly
+    ok    [C2.2        ] the lower identifier takes the extra dong
+    ok    [I5 C2.3     ] 2,000 random splits all sum exactly to the amount (seed 20261123)
+    ok    [I5          ] a zero amount is refused
+    ok    [I5          ] a negative amount is refused
+    ok    [I5          ] a float amount is refused
+    ok    [I5          ] an empty share list is refused
+    ok    [I5          ] a zero commitment is refused — it would be a lender with no stake
+    ok    [I5          ] a float commitment is refused
+unit: ledger                   32 checks    32 passed     0 failed
+    ok    [R6          ] a new ledger has nothing in it
+    ok    [R6          ] every opened account starts at zero
+    ok    [R6          ] the double-entry total of an empty ledger is zero
+    ok    [R6          ] a two-leg posting creates two entries
+    ok    [R6          ] the receiving account holds the money
+    ok    [R6          ] the external account is negative by the same amount
+    ok    [I2          ] the total across all accounts is still zero
+    ok    [R6          ] a three-leg transaction moves from two accounts to one
+    ok    [R6          ] the first lender's escrow fell by its leg
+    ok    [R6          ] the second lender's escrow fell by its leg
+    ok    [I2          ] the total is still zero after a multi-leg transaction
+    ok    [I9          ] the lender's account has two entries
+    ok    [I9          ] the first entry has no predecessor
+    ok    [I9          ] the second entry points at the first
+    ok    [I9          ] sequence numbers run 1..n within the account
+    ok    [I9          ] the chain is unbroken for escrow:BR-1
+    ok    [I9          ] the chain is unbroken for escrow:L1
+    ok    [I9          ] the chain is unbroken for escrow:L2
+    ok    [I9          ] the chain is unbroken for world
+    ok    [R6          ] entries carry the references they were posted with
+    ok    [R6          ] a transaction can be retrieved by its reference
+    ok    [R6          ] a correction adds entries rather than removing any
+    ok    [R6          ] the original posting is still in the ledger
+    ok    [R6          ] the reversal restored the first lender
+    ok    [R6          ] the reversal emptied the borrower account
+    ok    [I2          ] the total is zero after the correction
+    ok    [R6          ] entries() returns a tuple, not the internal list
+    ok    [R6          ] entries_for() returns a tuple
+    ok    [R6          ] a caller cannot grow the ledger through a returned value
+    ok    [R6          ] two hundred postings accumulate correctly
+    ok    [I9          ] the chain is unbroken across two hundred entries
+    ok    [I2          ] the total is still zero across two hundred entries
+negative: ledger               35 checks    35 passed     0 failed
+    ok    [R6          ] the amount on a posted entry cannot be changed
+    ok    [R6          ] the account on a posted entry cannot be changed
+    ok    [R6          ] the chain link on a posted entry cannot be rewritten
+    ok    [R6          ] the Ledger class has no update, delete, amend or override method
+    ok    [R6          ] the only method that changes the ledger is post()
+    ok    [I2          ] a transaction with more going in than out is refused
+    ok    [I2          ] a transaction with more going out than in is refused
+    ok    [I2          ] a one-dong imbalance is refused, the same as a large one
+    ok    [I2          ] a single-leg posting is refused — money must come from somewhere
+    ok    [I2          ] an empty posting is refused
+    ok    [R6          ] a zero-amount leg is refused
+    ok    [R6          ] a negative leg is refused — direction carries the sign, not the amount
+    ok    [R6          ] a float amount is refused at the ledger boundary too
+    ok    [R6          ] an unknown direction is refused
+    ok    [R6          ] posting to an account that was never opened is refused
+    ok    [R6          ] a posting without a transaction reference is refused
+    ok    [R6          ] opening the same account twice is refused
+    ok    [R6          ] reading an account that does not exist is refused
+    ok    [I2          ] after every refused posting the ledger is unchanged
+    ok    [C4.2        ] reconcile() takes exactly ledger, stored balances and a date
+    ok    [C4.2        ] no parameter of reconcile() mentions tolerance, threshold or epsilon
+    ok    [C4.2        ] the reconciliation module defines no tolerance constant
+    ok    [C4.1        ] a clean ledger reconciles with no breaks
+    ok    [C4.1        ] and reports zero breaks
+    ok    [C4.3        ] a one-dong discrepancy fails the reconciliation
+    ok    [C4.3        ] exactly one break is reported
+    ok    [C4.3        ] the break names the account
+    ok    [C4.3        ] it reports what the ledger says
+    ok    [C4.3        ] it reports what the store says
+    ok    [C4.3        ] it reports the difference
+    ok    [C4.3        ] it names the last entry posted to that account
+    ok    [C4.3        ] an account unknown to the ledger is itself a break
+    ok    [C4.3        ] the phantom account is named
+    ok    [C4.3        ] an account missing from the store is a break, not a skip
+    ok    [C4.3        ] it is reported as stored zero
+integration: ledger            34 checks    34 passed     0 failed
+    ok    [I3 B3.5     ] the commitments sum to the principal
+    ok    [B4.5        ] the borrower received exactly the principal at disbursement
+    ok    [R1          ] no lender principal passed through a platform account
+    ok    [R1          ] the platform's account has no entries at all in this run
+    ok    [I4          ] instalment 1: the payment application sums to the amount paid
+    ok    [I5 C2.4     ] instalment 1: the distribution sums to the amount paid
+    ok    [C2.4        ] instalment 1: one ledger entry per lender, plus the borrower's leg
+    ok    [I4          ] instalment 2: the payment application sums to the amount paid
+    ok    [I5 C2.4     ] instalment 2: the distribution sums to the amount paid
+    ok    [C2.4        ] instalment 2: one ledger entry per lender, plus the borrower's leg
+    ok    [I4          ] instalment 3: the payment application sums to the amount paid
+    ok    [I5 C2.4     ] instalment 3: the distribution sums to the amount paid
+    ok    [C2.4        ] instalment 3: one ledger entry per lender, plus the borrower's leg
+    ok    [I4          ] instalment 4: the payment application sums to the amount paid
+    ok    [I5 C2.4     ] instalment 4: the distribution sums to the amount paid
+    ok    [C2.4        ] instalment 4: one ledger entry per lender, plus the borrower's leg
+    ok    [I4          ] instalment 5: the payment application sums to the amount paid
+    ok    [I5 C2.4     ] instalment 5: the distribution sums to the amount paid
+    ok    [C2.4        ] instalment 5: one ledger entry per lender, plus the borrower's leg
+    ok    [I4          ] instalment 6: the payment application sums to the amount paid
+    ok    [I5 C2.4     ] instalment 6: the distribution sums to the amount paid
+    ok    [C2.4        ] instalment 6: one ledger entry per lender, plus the borrower's leg
+    ok    [I6          ] every dong of principal was scheduled
+    ok    [I5          ] the lenders hold exactly the total repayable at the end
+    ok    [C4.1        ] the borrower's account is empty once the loan is repaid
+    ok    [C2.1        ] L1 received more than they committed
+    ok    [C2.1        ] L2 received more than they committed
+    ok    [I5          ] the lenders' returns sum to the total repaid, with nothing lost to rounding
+    ok    [C4.1        ] the run reconciles with no breaks
+    ok    [C4.1        ] no balance breaks
+    ok    [I9          ] no entry-chain breaks
+    ok    [I2          ] the double-entry total across every account is zero
+    ok    [I2          ] the external account holds the negative of everything inside
+    ok    [C4.1        ] running the scenario twice produces identical balances
+----------------------------------------------------------------
+308 checks, 308 passed, 0 failed
+
+Traceability gate (report-only)
+----------------------------------------------------------------
+documented requirements : 75  (6 rules, 10 invariants, 59 criteria)
+covered by a test       : 25
+uncovered               : 50
+claimed but undocumented: 0
+
+Uncovered — this is the backlog in a second form:
+  rule       R2
+  rule       R3
+  rule       R4
+  rule       R5
+  invariant  I1
+  invariant  I7
+  invariant  I8
+  invariant  I10
+  criterion  A1.1
+  criterion  A1.2
+  criterion  A1.4
+  criterion  A1.5
+  criterion  A2.1
+  criterion  A2.2
+  criterion  A2.3
+  criterion  A2.4
+  criterion  A3.1
+  criterion  A3.2
+  criterion  A3.3
+  criterion  A3.4
+  criterion  A3.5
+  criterion  A4.5
+  criterion  B1.1
+  criterion  B1.2
+  criterion  B1.3
+  criterion  B1.4
+  criterion  B1.5
+  criterion  B2.1
+  criterion  B2.2
+  criterion  B2.3
+  criterion  B3.1
+  criterion  B3.2
+  criterion  B3.3
+  criterion  B3.4
+  criterion  B4.1
+  criterion  B4.2
+  criterion  B4.3
+  criterion  B4.4
+  criterion  C1.2
+  criterion  C1.5
+  criterion  C3.1
+  criterion  C3.2
+  criterion  C3.3
+  criterion  C3.4
+  criterion  C4.4
+  criterion  C4.5
+  criterion  C5.1
+  criterion  C5.2
+  criterion  C5.3
+  criterion  C5.4
