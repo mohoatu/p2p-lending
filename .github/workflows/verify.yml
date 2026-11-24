@@ -1,0 +1,66 @@
+# Every check, on every push, on the two platforms that disagree.
+#
+# Windows is not optional here. The banned-vocabulary list this project checks
+# against contains Vietnamese ("bảo đảm vốn"), the Windows console defaults to
+# cp1252, and printing those strings there without reconfiguring stdout raises
+# UnicodeEncodeError — a failure that looks like a broken test rather than a
+# broken console. A day went to exactly that in migration-verify. CI makes sure
+# the fix stays in place.
+#
+# No pip install anywhere. The constitution says standard library only, and a
+# green run with an empty dependency list is how that stays true rather than
+# merely intended.
+
+name: verify
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: tests (${{ matrix.os }}, py${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.10', '3.13']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Run every suite
+        run: python tests/run.py
+
+      # Run the gate on its own as well. tests/run.py already calls it, but a
+      # separate step means the log says plainly how many documented
+      # requirements have no test — the number that is meant to fall over time.
+      - name: Traceability gate (report-only until T24)
+        run: python tests/traceability.py
+
+  no-dependencies:
+    name: the dependency list is still empty
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # A rule nobody checks is a rule that quietly stops being true.
+      - name: Fail if a manifest appeared
+        shell: bash
+        run: |
+          found=$(ls requirements.txt pyproject.toml setup.py Pipfile poetry.lock 2>/dev/null || true)
+          if [ -n "$found" ]; then
+            echo "A dependency manifest appeared: $found"
+            echo "This project runs on the standard library (CLAUDE.md, constitution 7)."
+            exit 1
+          fi
+          echo "No dependency manifest. Good."
