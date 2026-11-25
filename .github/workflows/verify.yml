@@ -64,3 +64,25 @@ jobs:
             exit 1
           fi
           echo "No dependency manifest. Good."
+
+  ratchet:
+    name: nothing got worse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      # kuli is pinned to a tag on purpose. Changing how a measure is computed
+      # changes every number it has ever produced, so a floating version would
+      # silently invalidate this repository's baseline. Bumping the tag is a
+      # decision, taken with a re-baseline.
+      - name: Fetch kuli v0.1.0
+        run: git clone --depth 1 --branch v0.1.0 https://github.com/mohoatu/trunk-kuli.git /tmp/kuli
+
+      - name: kuli ratchet
+        env:
+          PYTHONPATH: /tmp/kuli
+        run: python -m kuli.cli ratchet
